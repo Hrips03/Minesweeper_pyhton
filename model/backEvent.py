@@ -1,12 +1,10 @@
 from model.IEvent import IEvent  
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtCore import Qt
 
 class backEvent(IEvent):
     def handle(self, ui_instance):
         # ui_instance.main_menu()
-
-        ui_instance.rules_label.hide()
+        if ui_instance.rules_label is not None:
+            ui_instance.rules_label.hide()
         ui_instance.back_button.hide()
 
         if ui_instance.easy_button is not None:

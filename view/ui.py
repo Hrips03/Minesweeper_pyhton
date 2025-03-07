@@ -12,25 +12,27 @@ class UI(QWidget):
         super().__init__()
         self.event_map = {
             "play": playEvent(),
+            "easy": playEvent("easy"),
+            "medium": playEvent("medium"),
+            "hard": playEvent("hard"),
             "rules": rulesEvent(),
             "back": backEvent(),
         }
         self.easy_button = None
         self.medium_button = None
         self.hard_button = None
+        self.rules_label = None
         self.main_menu()
 
     def clear_layout(self):
-        layout = self.layout()  # Get the current layout
+        layout = self.layout()
         if layout:
-            # Clear all widgets in the layout
             for i in reversed(range(layout.count())):
                 widget = layout.itemAt(i).widget()
                 if widget:
-                    widget.deleteLater()  # Safely remove the widget
+                    widget.deleteLater()  
 
     def main_menu(self):
-        # self.clear_layout()  # Clear existing widgets
         self.setWindowTitle("Minesweeper")
         self.setGeometry(100, 100, 400, 500)
         self.setWindowFlags(Qt.Window | Qt.WindowCloseButtonHint | Qt.WindowMinimizeButtonHint)
@@ -40,7 +42,6 @@ class UI(QWidget):
 
         layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
-        # Game Logo
         self.logo_label = QLabel(self)
         pixmap = QPixmap("G:/Hripsime/Education/UNI/4rd_kurs/Minesweeper_pyhton/view/icons/game_logo.png") 
         self.logo_label.setPixmap(pixmap)
@@ -65,7 +66,6 @@ class UI(QWidget):
         layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
     def difficulty_menu(self):
-        # self.clear_layout()
         self.logo_label.hide()
         self.play_button.hide()
         self.rules_button.hide()
@@ -75,16 +75,17 @@ class UI(QWidget):
         self.difficulty_label.setAlignment(Qt.AlignCenter)
         self.layout().addWidget(self.difficulty_label, alignment=Qt.AlignCenter)
 
-        # Add new buttons to the same layout
         self.easy_button = self.create_button("Easy", "#FFFFFF", "#41719c", lambda: self.sendEvent("easy"))
         self.layout().addWidget(self.easy_button, alignment=Qt.AlignCenter)
+        self.layout().addSpacing(10)
 
         self.medium_button = self.create_button("Medium", "#FFFFFF", "#41719c", lambda: self.sendEvent("medium"))
         self.layout().addWidget(self.medium_button, alignment=Qt.AlignCenter)
+        self.layout().addSpacing(10)
 
         self.hard_button = self.create_button("Hard", "#FFFFFF", "#41719c", lambda: self.sendEvent("hard"))
         self.layout().addWidget(self.hard_button, alignment=Qt.AlignCenter)
-
+        self.layout().addSpacing(20)
         # self.layout().addSpacerItem(QSpacerItem(20, 20, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
         # Show back button
